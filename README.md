@@ -11,6 +11,10 @@
 - **Sensory Analysis**: Real-time Plotly visualizations with trend mapping and correlation matrices.
 - **Smart Alerts**: Visual warning system for instant detection of weather deviations.
 
+## ✨ Zero-Setup Demo Mode
+**No API Key? No Problem.** 
+This project features a built-in high-fidelity "Demo Mode". If no API key is detected, the system automatically generates synthetic meteorological data using seasonal oscillation models with randomized anomaly injection. This allows for an instant evaluation of the AI engine's detection capabilities without any external configuration.
+
 ## 🛠️ Tech Stack
 - **Dashboard**: Streamlit (with Custom CSS/HTML)
 - **Visuals**: Plotly Express & Graph Objects
@@ -32,9 +36,9 @@
 ## 🖥️ Usage Guide
 
 1. **The Launchpad**: Upon opening, you'll be greeted by our premium landing page.
-2. **Engage Tracker**: Click the **"Launch Anomaly Tracker →"** button.
-3. **Configure Target**: In the sidebar, enter your target **City** and set your preferred **Refresh Interval**.
-4. **Monitor**: Click **"Engage Tracker"** to start the AI sensors. Watch the live telemetry for any red 'x' marks—these are anomalies detected by the engine.
+2. **Engage Tracker**: Click the **"Launch Anomaly Tracker →"** button. 
+3. **Configure Target**: In the sidebar, enter any target **City**. You can skip the API configuration entirely.
+4. **Monitor**: Click **"Engage Tracker"** to start the AI sensors. The system will detect that no API key is present and immediately activate **Demo Mode** with live synthetic telemetry.
 
 ---
 *Built for Precision Agriculture, Logistics, and High-Stakes Insurance.*
