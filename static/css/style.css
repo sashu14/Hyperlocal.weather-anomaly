@@ -1,0 +1,48 @@
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.float-animation {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0e1117;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e2130;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00d1ff;
+}
+
+/* Smooth transition for body */
+body {
+    transition: background-color 0.5s ease;
+}
+
+/* Hero text gradient */
+.hero-text-gradient {
+    background: linear-gradient(135deg, #00d1ff 0%, #007bff 50%, #b06ab3 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

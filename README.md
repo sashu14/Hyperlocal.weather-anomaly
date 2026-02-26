@@ -30,8 +30,9 @@ This project features a built-in high-fidelity "Demo Mode". If no API key is det
    ```
 2. **Run the application**:
    ```bash
-   streamlit run app.py
+   python app.py
    ```
+   *The dashboard will be available at [http://localhost:3000](http://localhost:3000)*
 
 ## 🖥️ Usage Guide
 
