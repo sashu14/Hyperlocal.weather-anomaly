@@ -5,11 +5,26 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import numpy as np
 
+try:
+    import streamlit as st
+    HAS_STREAMLIT = True
+except ImportError:
+    HAS_STREAMLIT = False
+
 load_dotenv()
 
 class WeatherDataHandler:
     def __init__(self, api_key=None, city="New York"):
-        self.api_key = api_key or os.getenv("OPENWEATHER_API_KEY")
+        # Prioritize passed key -> Streamlit Secrets -> Env Var
+        self.api_key = api_key
+        if not self.api_key and HAS_STREAMLIT:
+            try:
+                self.api_key = st.secrets.get("OPENWEATHER_API_KEY")
+            except:
+                pass
+        if not self.api_key:
+            self.api_key = os.getenv("OPENWEATHER_API_KEY")
+        
         self.city = city
         self.base_url = "http://api.openweathermap.org/data/2.5/"
         
