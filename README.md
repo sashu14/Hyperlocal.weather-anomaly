@@ -41,5 +41,21 @@ This project features a built-in high-fidelity "Demo Mode". If no API key is det
 3. **Configure Target**: In the sidebar, enter any target **City**. You can skip the API configuration entirely.
 4. **Monitor**: Click **"Engage Tracker"** to start the AI sensors. The system will detect that no API key is present and immediately activate **Demo Mode** with live synthetic telemetry.
 
+## 🌎 Deployment Options
+
+### 1. Vercel (Live API & Analytics)
+- **Best for**: Real-time monitoring with your own API key.
+- **Config**: Uses `vercel.json` and the Flask server in `api/index.py`.
+- **Setup**: Import repo to Vercel, it works out-of-the-box.
+
+### 2. GitHub Pages (Rapid Showcase)
+- **Best for**: Portfolios and instant visual demos.
+- **Config**: Uses the standalone `docs/index.html`.
+- **Setup**: 
+  1. Go to **Settings > Pages** in your GitHub repo.
+  2. Set **Source** to "Deploy from a branch".
+  3. Select **Branch: main** and **Folder: /docs**.
+  4. Your static showroom will be live at `https://sashu14.github.io/Hyperlocal.weather-anomaly/`.
+
 ---
 *Built for Precision Agriculture, Logistics, and High-Stakes Insurance.*

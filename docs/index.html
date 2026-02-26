@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperlocal Weather Anomaly Detector (Static Demo)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0e1117',
+                        card: '#1e2130',
+                        accent: '#00d1ff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0e1117;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e2130;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00d1ff;
+        }
+
+        /* Smooth transition for body */
+        body {
+            transition: background-color 0.5s ease;
+        }
+
+        /* Hero text gradient */
+        .hero-text-gradient {
+            background: linear-gradient(135deg, #00d1ff 0%, #007bff 50%, #b06ab3 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            background-color: #1e2130;
+            border-width: 1px;
+            border-color: rgba(255, 255, 255, 0.05);
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 209, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white font-sans min-h-screen overflow-x-hidden">
+
+    <!-- Intro Page -->
+    <div id="intro-page"
+        class="flex flex-col items-center justify-center min-h-screen px-4 py-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-card via-black to-dark transition-all duration-700">
+        <div class="max-w-4xl w-full text-center space-y-8 animate-fade-in">
+            <div
+                class="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-xs font-bold tracking-widest uppercase mb-4 shadow-lg">
+                Next-Gen Weather Tech
+            </div>
+            <h1
+                class="text-6xl md:text-8xl font-extrabold leading-tight mb-6 bg-gradient-to-br from-accent via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Predicting the <br>Unpredictable.
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                Advanced anomaly detection for hyperlocal weather monitoring. Secure your assets with AI-driven climate
+                intelligence.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 text-left">
+                <div
+                    class="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-accent/40 hover:-translate-y-2 transition-all duration-300 backdrop-blur-sm group">
+                    <span class="text-4xl mb-6 block">🛰️</span>
+                    <h3 class="text-accent text-xl font-bold mb-3">Hyper-Local Precision</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">High-frequency data ingestion from global
+                        meteorological stations for unmatched accuracy at the neighborhood level.</p>
+                </div>
+                <div
+                    class="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-accent/40 hover:-translate-y-2 transition-all duration-300 backdrop-blur-sm group">
+                    <span class="text-4xl mb-6 block">🧠</span>
+                    <h3 class="text-accent text-xl font-bold mb-3">Isolation Engine</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Proprietary Isolation Forest implementation
+                        identifies climate outliers and extreme shifts in real-time.</p>
+                </div>
+                <div
+                    class="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-accent/40 hover:-translate-y-2 transition-all duration-300 backdrop-blur-sm group">
+                    <span class="text-4xl mb-6 block">📊</span>
+                    <h3 class="text-accent text-xl font-bold mb-3">Visual Insights</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Interactive temporal mapping and correlation
+                        analysis for informed decision making in agriculture and logistics.</p>
+                </div>
+            </div>
+
+            <button onclick="launchDashboard()"
+                class="mt-16 px-12 py-5 bg-gradient-to-r from-accent to-blue-600 rounded-full text-lg font-bold hover:shadow-[0_0_30px_rgba(0,209,255,0.4)] hover:scale-105 transition-all duration-300">
+                Launch Anomaly Tracker →
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden min-h-screen p-6 md:p-12 animate-fade-in">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <button onclick="goToIntro()"
+                        class="text-gray-500 hover:text-white transition-colors flex items-center gap-2 mb-2 text-sm">
+                        ← Back to Intro
+                    </button>
+                    <h2 class="text-4xl font-extrabold flex items-center gap-3">
+                        🌦️ <span id="display-city">New York</span> Tracker
+                    </h2>
+                </div>
+                <div class="flex gap-4">
+                    <input type="text" id="city-input" placeholder="Enter City"
+                        class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 focus:border-accent outline-none w-48 transition-all">
+                    <button onclick="startTracking()"
+                        class="px-8 py-3 bg-accent text-black font-bold rounded-2xl hover:bg-white transition-all whitespace-nowrap">
+                        Engage Sensors
+                    </button>
+                </div>
+            </div>
+
+            <div id="anomaly-alert"
+                class="hidden p-6 rounded-2xl bg-gradient-to-r from-red-600 to-pink-600 shadow-2xl animate-pulse relative overflow-hidden">
+                <div class="absolute inset-0 bg-white/10 animate-pulse"></div>
+                <div class="relative z-10 flex items-center gap-4">
+                    <span class="text-3xl">⚠️</span>
+                    <div>
+                        <h4 class="text-xl font-black">ANOMALY DETECTED!</h4>
+                        <p class="text-white/80 font-medium">Unusual atmospheric shift identified in <span
+                                id="alert-city"></span>. Reviewing telemetry...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card">
+                    <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Temperature</p>
+                    <div class="flex items-end gap-2">
+                        <h3 id="stat-temp" class="text-4xl font-black">--</h3>
+                        <span id="stat-temp-delta" class="text-sm font-bold text-gray-500"></span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Humidity</p>
+                    <h3 id="stat-hum" class="text-4xl font-black">--</h3>
+                </div>
+                <div class="stat-card">
+                    <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Pressure</p>
+                    <h3 id="stat-press" class="text-4xl font-black">--</h3>
+                </div>
+                <div class="stat-card">
+                    <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Anomaly Score</p>
+                    <div class="flex flex-col">
+                        <h3 id="stat-score" class="text-4xl font-black">--</h3>
+                        <span class="text-xs text-gray-600 font-bold tracking-tighter uppercase">Detection Sensitivity:
+                            0.05</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 rounded-3xl bg-card p-8 border border-white/5 relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-8">
+                        <h4 class="text-xl font-bold">Atmospheric Trend Mapping</h4>
+                        <div class="flex gap-2">
+                            <span
+                                class="px-3 py-1 bg-accent/20 text-accent text-xs font-bold rounded-lg rounded-full">SIMULATED</span>
+                            <span id="last-update" class="text-gray-600 text-xs font-bold uppercase py-1"></span>
+                        </div>
+                    </div>
+                    <div id="main-chart" class="w-full h-[400px]"></div>
+                </div>
+
+                <div class="rounded-3xl bg-card p-8 border border-white/5 space-y-8">
+                    <h4 class="text-xl font-bold">Risk Parameters</h4>
+                    <div class="space-y-6">
+                        <div class="p-4 rounded-2xl bg-white/5 border border-white/5">
+                            <p class="text-xs text-gray-500 uppercase font-bold mb-2">Wind Influence</p>
+                            <h5 id="stat-wind" class="text-2xl font-black">--</h5>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/5 border border-white/5">
+                            <p class="text-xs text-gray-500 uppercase font-bold mb-2">Sensor Calibration</p>
+                            <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden mt-2">
+                                <div class="bg-accent h-full w-[95%]"></div>
+                            </div>
+                            <p class="text-[10px] text-accent mt-2 font-bold uppercase">Optimal Operation</p>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                            <p class="text-sm italic text-blue-300 leading-relaxed">Static Demo Mode: AI engine is
+                                cross-referencing simulated hyperlocal datasets with historical seasonal averages.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let updateInterval = null;
+        let currentCity = 'New York';
+        let history = [];
+
+        function launchDashboard() {
+            document.getElementById('intro-page').classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                document.getElementById('intro-page').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+            }, 300);
+            startTracking();
+        }
+
+        function goToIntro() {
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('intro-page').classList.remove('hidden', 'opacity-0', 'scale-95');
+            if (updateInterval) clearInterval(updateInterval);
+        }
+
+        function startTracking() {
+            const inputCity = document.getElementById('city-input').value;
+            if (inputCity) currentCity = inputCity;
+
+            document.getElementById('display-city').innerText = currentCity;
+
+            if (updateInterval) clearInterval(updateInterval);
+
+            // Seed initial history
+            generateInitialHistory();
+            updateData();
+            updateInterval = setInterval(updateData, 5000); // 5s simulation update
+        }
+
+        function generateInitialHistory() {
+            history = [];
+            const now = new Date();
+            for (let i = 48; i >= 0; i--) {
+                const time = new Date(now.getTime() - i * 3600000);
+                const hour = time.getHours();
+                // Seasonal oscillation + hour-based oscillation
+                const baseTemp = 20 + 10 * Math.sin(hour * 2 * Math.PI / 24) + Math.random() * 2;
+                const is_anomaly = Math.random() < 0.05;
+                const temp = is_anomaly ? baseTemp + (Math.random() > 0.5 ? 15 : -10) : baseTemp;
+
+                history.push({
+                    timestamp: time.toISOString(),
+                    temp: temp,
+                    humidity: 50 + 20 * Math.cos(hour * 2 * Math.PI / 24) + Math.random() * 5,
+                    pressure: 1013 + Math.random() * 3,
+                    is_anomaly: is_anomaly
+                });
+            }
+        }
+
+        function updateData() {
+            const now = new Date();
+            const hour = now.getHours();
+            const baseTemp = 20 + 10 * Math.sin(hour * 2 * Math.PI / 24) + Math.random() * 2;
+            const is_anomaly = Math.random() < 0.1; // Higher chance in live view
+            const temp = is_anomaly ? baseTemp + (Math.random() > 0.5 ? 12 : -8) : baseTemp;
+
+            const newData = {
+                timestamp: now.toISOString(),
+                temp: temp,
+                humidity: 50 + 20 * Math.cos(hour * 2 * Math.PI / 24) + Math.random() * 5,
+                pressure: 1013 + Math.random() * 3,
+                is_anomaly: is_anomaly,
+                anomaly_score: is_anomaly ? 0.02 + Math.random() * 0.03 : 0.4 + Math.random() * 0.6,
+                wind_speed: 5 + Math.random() * 4
+            };
+
+            history.push(newData);
+            if (history.length > 50) history.shift();
+
+            // Update UI
+            document.getElementById('stat-temp').innerText = `${newData.temp.toFixed(2)}°C`;
+            document.getElementById('stat-hum').innerText = `${newData.humidity.toFixed(2)}%`;
+            document.getElementById('stat-press').innerText = `${newData.pressure.toFixed(2)}hPa`;
+            document.getElementById('stat-wind').innerText = `${newData.wind_speed.toFixed(2)} m/s`;
+            document.getElementById('stat-score').innerText = newData.anomaly_score.toFixed(3);
+            document.getElementById('last-update').innerText = now.toLocaleTimeString();
+
+            const meanTemp = history.reduce((acc, h) => acc + h.temp, 0) / history.length;
+            const tempDelta = newData.temp - meanTemp;
+            const deltaEl = document.getElementById('stat-temp-delta');
+            deltaEl.innerText = `${tempDelta > 0 ? '+' : ''}${tempDelta.toFixed(1)}°C`;
+            deltaEl.className = `text-sm font-bold ${tempDelta > 0 ? 'text-red-500' : 'text-blue-500'}`;
+
+            // Anomaly Alert
+            const alertEl = document.getElementById('anomaly-alert');
+            if (newData.is_anomaly) {
+                alertEl.classList.remove('hidden');
+                document.getElementById('alert-city').innerText = currentCity.toUpperCase();
+            } else {
+                alertEl.classList.add('hidden');
+            }
+
+            renderChart();
+        }
+
+        function renderChart() {
+            const temps = history.map(h => h.temp);
+            const times = history.map(h => h.timestamp);
+            const anomalies = history.filter(h => h.is_anomaly);
+
+            const mainTrace = {
+                x: times,
+                y: temps,
+                mode: 'lines',
+                line: { color: '#00d1ff', width: 3, shape: 'spline' },
+                name: 'Temperature trend'
+            };
+
+            const anomalyTrace = {
+                x: anomalies.map(a => a.timestamp),
+                y: anomalies.map(a => a.temp),
+                mode: 'markers',
+                marker: { color: '#ff4b4b', size: 12, line: { color: 'white', width: 2 }, symbol: 'x' },
+                name: 'Anomalies detected'
+            };
+
+            const layout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                showlegend: false,
+                margin: { l: 40, r: 0, t: 20, b: 40 },
+                xaxis: {
+                    gridcolor: 'rgba(255,255,255,0.05)',
+                    zeroline: false,
+                    tickfont: { color: '#666' }
+                },
+                yaxis: {
+                    gridcolor: 'rgba(255,255,255,0.05)',
+                    zeroline: false,
+                    tickfont: { color: '#666' }
+                },
+                hovermode: 'x unified'
+            };
+
+            Plotly.newPlot('main-chart', [mainTrace, anomalyTrace], layout, { responsive: true, displayModeBar: false });
+        }
+    </script>
+</body>
+
+</html>
