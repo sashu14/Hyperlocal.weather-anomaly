@@ -19,9 +19,13 @@ class WeatherDataHandler:
         self.api_key = api_key
         if not self.api_key and HAS_STREAMLIT:
             try:
-                self.api_key = st.secrets.get("OPENWEATHER_API_KEY")
-            except:
+                # Use st.secrets as a dict-like object to avoid failures if not set
+                if "OPENWEATHER_API_KEY" in st.secrets:
+                    self.api_key = st.secrets["OPENWEATHER_API_KEY"]
+            except Exception:
+                # st.secrets might raise an error if accessed but NO secrets are set on Cloud
                 pass
+        
         if not self.api_key:
             self.api_key = os.getenv("OPENWEATHER_API_KEY")
         
