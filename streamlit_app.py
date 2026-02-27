@@ -56,7 +56,6 @@ st.markdown("""
 
 # Sidebar
 with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/000000/cloud-lighting.png", width=80)
     st.title("Sensor Hub")
     city = st.text_input("Target City", "New York")
     contamination = st.slider("Anomaly Sensitivity", 0.01, 0.20, 0.05)
