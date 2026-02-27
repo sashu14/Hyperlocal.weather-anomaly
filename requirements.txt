@@ -1,11 +1,8 @@
 pandas
 requests
 scikit-learn
-plotly
 python-dotenv
 numpy
-matplotlib
 flask
 flask-cors
-gunicorn
-streamlit
+# Removed streamlit and plotly for Vercel deployment (under 500MB limit)
