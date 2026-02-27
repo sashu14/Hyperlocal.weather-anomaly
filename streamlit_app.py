@@ -59,11 +59,10 @@ with st.sidebar:
     st.image("https://img.icons8.com/fluency/96/000000/cloud-lighting.png", width=80)
     st.title("Sensor Hub")
     city = st.text_input("Target City", "New York")
-    api_key = st.text_input("OpenWeather API Key (Optional)", type="password")
     contamination = st.slider("Anomaly Sensitivity", 0.01, 0.20, 0.05)
     
     st.markdown("---")
-    st.info("💡 **Demo Mode:** If no API key is provided, the system uses high-fidelity synthetic data with randomized anomaly injection.")
+    st.info("💡 **Demo Mode Active:** The system uses high-fidelity synthetic data with randomized anomaly injection for instant evaluation.")
 
 # Title
 st.title("🌦️ Hyperlocal Weather Anomaly Detector")
@@ -77,7 +76,7 @@ if 'city' not in st.session_state or st.session_state.city != city:
     st.session_state.detector = None
 
 # Logic
-handler = WeatherDataHandler(api_key=api_key if api_key else None, city=city)
+handler = WeatherDataHandler(city=city)
 
 if st.session_state.detector is None:
     with st.spinner(f"Calibrating sensors for {city}..."):
